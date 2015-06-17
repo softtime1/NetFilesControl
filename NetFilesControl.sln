@@ -5,6 +5,13 @@ VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesValidator", "FilesValidator\FilesValidator.csproj", "{23EE58DA-C2E6-402E-ADB5-0BEA94AEF21C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesValidator.Tests", "FilesValidator.Tests\FilesValidator.Tests.csproj", "{452C771B-C913-4435-A8B9-7020A6D8BD6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71450B10-AC36-40B6-B643-DE8CA8688E4B}"
+	ProjectSection(SolutionItems) = preProject
+		Main.testsettings = Main.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +22,10 @@ Global
 		{23EE58DA-C2E6-402E-ADB5-0BEA94AEF21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23EE58DA-C2E6-402E-ADB5-0BEA94AEF21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23EE58DA-C2E6-402E-ADB5-0BEA94AEF21C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{452C771B-C913-4435-A8B9-7020A6D8BD6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{452C771B-C913-4435-A8B9-7020A6D8BD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{452C771B-C913-4435-A8B9-7020A6D8BD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{452C771B-C913-4435-A8B9-7020A6D8BD6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
