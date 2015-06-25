@@ -18,36 +18,52 @@ namespace FilesValidator.BL
             Folder = folder;
         }
 
-        public String Check(IFileItem fileItem)
+        public IFileItemResult Check(IFileItem fileItem)
         {
+            var result = new FileItemResult(fileItem);
             var destinationFoler = Path.Combine(Folder, fileItem.DestinationFolder);
-            if(!Directory.Exists(destinationFoler))
-                return String.Format("Destination folder \"{0}\" not found",
-                destinationFoler);
+            result.DestinationFolderValid = Directory.Exists(destinationFoler);
+            if (!result.DestinationFolderValid)
+            {
+                result.CheckResult = String.Format("Destination folder \"{0}\" not found",
+                    destinationFoler);
+                return result;
+            }
 
-            var resultFile = Path.Combine(destinationFoler, fileItem.ResultFile);
-            if (!File.Exists(resultFile))
-                return String.Format("Result file \"{0}\" not found", resultFile);
+            result.FullFilename = Path.Combine(destinationFoler, fileItem.ResultFile);
+            result.ResultFileValid = File.Exists(result.FullFilename);
+            if (!result.ResultFileValid)
+            {
+                result.CheckResult = String.Format(
+                    "Result file \"{0}\" not found", result.FullFilename);
+                return result;
+            }
 
-            if (String.IsNullOrEmpty(fileItem.ResultFileMD5))
-                return null;
             byte[] fileBytes = null;
             try
             {
-                fileBytes = File.ReadAllBytes(resultFile);
+                fileBytes = File.ReadAllBytes(result.FullFilename);
             }
             catch (IOException ex)
             {
-                return ex.Message;
+                result.CheckResult = ex.Message;
+                return result;
             }
-            var md5Bytes = MD5.Create().ComputeHash(File.ReadAllBytes(resultFile));
+            var md5Bytes = MD5.Create().ComputeHash(File.ReadAllBytes(result.FullFilename));
             var md5 = new StringBuilder();
             for (int i = 0; i < md5Bytes.Length; i++)
                 md5.Append(md5Bytes[i].ToString("x2"));
+            result.ResultFileMD5 = md5.ToString();
             var comparer = StringComparer.OrdinalIgnoreCase;
-            if (0 != comparer.Compare(fileItem.ResultFileMD5, md5.ToString()))
-                return "Hash is wrong";
-            return null;
+            if (!String.IsNullOrEmpty(fileItem.ResultFileMD5) &&
+                0 != comparer.Compare(fileItem.ResultFileMD5, result.ResultFileMD5))
+            {
+                result.ResultFileMD5Valid = false;
+                result.CheckResult = "Hash is wrong";
+                return result;
+            }
+            result.ResultFileMD5Valid = true;
+            return result;
         }
     }
 }

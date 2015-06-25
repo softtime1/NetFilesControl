@@ -45,7 +45,7 @@ namespace FilesValidator.BL
             result.SourceFile = _workSheet.Cells[_currentRow, 1].Value;
             if (String.IsNullOrEmpty(result.SourceFile))
                 return null;
-            result.DestinationFolder = _workSheet.Cells[_currentRow, 2].Value;
+            result.DestinationFolder = _workSheet.Cells[_currentRow, 2].Value.ToString();
             result.ResultFile = _workSheet.Cells[_currentRow, 3].Value;
             result.ResultFileMD5 = _workSheet.Cells[_currentRow, 4].Value;
             return result;

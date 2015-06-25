@@ -30,7 +30,7 @@ namespace FilesValidator.Tests.BL
             var exptectedMessage = String.Format(
                 "Destination folder \"{0}\" not found",
                 Path.Combine(TestContext.TestDeploymentDir, "Hello"));
-            Assert.AreEqual(exptectedMessage, actual);
+            Assert.AreEqual(exptectedMessage, actual.CheckResult);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace FilesValidator.Tests.BL
             var exptectedMessage = String.Format(
                 "Result file \"{0}\" not found",
                 Path.Combine(TestContext.TestDeploymentDir, "Hello", "Peace.txt"));
-            Assert.AreEqual(exptectedMessage, actual);
+            Assert.AreEqual(exptectedMessage, actual.CheckResult);
             Directory.Delete(destinationDir);
         }
 
@@ -66,7 +66,7 @@ namespace FilesValidator.Tests.BL
             mockFileItem.Setup(m => m.ResultFile).Returns("Peace.txt");
             var target = new FileItemChecker(TestContext.TestDeploymentDir);
             var actual = target.Check(mockFileItem.Object);
-            Assert.IsTrue(String.IsNullOrEmpty(actual));
+            Assert.IsTrue(String.IsNullOrEmpty(actual.CheckResult));
             File.Delete(resultFile);
             Directory.Delete(destinationDir);
         }
@@ -92,7 +92,7 @@ namespace FilesValidator.Tests.BL
             mockFileItem.Setup(m => m.ResultFileMD5).Returns(md5.ToString());
             var target = new FileItemChecker(TestContext.TestDeploymentDir);
             var actual = target.Check(mockFileItem.Object);
-            Assert.AreEqual("Hash is wrong", actual);
+            Assert.AreEqual("Hash is wrong", actual.CheckResult);
             File.Delete(resultFile);
             Directory.Delete(destinationDir);
         }
@@ -117,7 +117,7 @@ namespace FilesValidator.Tests.BL
             mockFileItem.Setup(m => m.ResultFileMD5).Returns(md5.ToString());
             var target = new FileItemChecker(TestContext.TestDeploymentDir);
             var actual = target.Check(mockFileItem.Object);
-            Assert.IsTrue(String.IsNullOrEmpty(actual));
+            Assert.IsTrue(String.IsNullOrEmpty(actual.CheckResult));
             File.Delete(resultFile);
             Directory.Delete(destinationDir);
         }
@@ -143,7 +143,7 @@ namespace FilesValidator.Tests.BL
             var expected = String.Format(
                 "The process cannot access the file '{0}' because it is being used by another process.",
                 resultFile);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual.CheckResult);
             fs.Close();
             fs.Dispose();
             File.Delete(resultFile);

@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BL\ExcelReaderTests.cs" />
+    <Compile Include="BL\FileCheckerTests.cs" />
     <Compile Include="BL\FileItemCheckerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
